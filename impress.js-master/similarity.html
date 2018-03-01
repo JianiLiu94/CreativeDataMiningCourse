@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+body {
+  font: 10px sans-serif;
+}
+svg {background-color:black;}
+    
+    svg text{
+  fill:grey;
+  font-size:18px;
+}
+svg .values text{
+  pointer-events:none;
+  stroke-width: 0.5px;
+}
+.groups:hover{
+  cursor:pointer;
+  font-weight:bold;
+}
+</style>
+<body>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="http://vizjs.org/viz.v1.1.0.min.js"></script>
+<script>
+var data = [['CheckPoint 1','CheckPoint 2',24]
+,['CheckPoint 1','CheckPoint 3',10]
+,['CheckPoint 1','CheckPoint 4',15]
+,['CheckPoint 1','CheckPoint 5',13]
+,['CheckPoint 1','CheckPoint 6',15]
+,['CheckPoint 1','CheckPoint 7',13]
+,['CheckPoint 1','CheckPoint 8',5]
+,['CheckPoint 1','CheckPoint 9',12]
+,['CheckPoint 1','CheckPoint 10',10]
+,['CheckPoint 1','CheckPoint 11',5]
+,['CheckPoint 1','CheckPoint 12',7]
+,['CheckPoint 1','CheckPoint 13',9]
+,['CheckPoint 1','CheckPoint 14',9]
+
+            
+,['CheckPoint 2','CheckPoint 1',24]
+,['CheckPoint 2','CheckPoint 3',7]
+,['CheckPoint 2','CheckPoint 4',17]
+,['CheckPoint 2','CheckPoint 5',12]
+,['CheckPoint 2','CheckPoint 6',13]
+,['CheckPoint 2','CheckPoint 7',17]
+,['CheckPoint 2','CheckPoint 8',2]
+,['CheckPoint 2','CheckPoint 9',9]
+,['CheckPoint 2','CheckPoint 10',11]
+,['CheckPoint 2','CheckPoint 11',0]
+,['CheckPoint 2','CheckPoint 12',5]
+,['CheckPoint 2','CheckPoint 13',5]
+,['CheckPoint 2','CheckPoint 14',6]
+
+            
+,['CheckPoint 3','CheckPoint 1',10]
+,['CheckPoint 3','CheckPoint 2',7]
+,['CheckPoint 3','CheckPoint 4',13]
+,['CheckPoint 3','CheckPoint 5',2]
+,['CheckPoint 3','CheckPoint 6',6]
+,['CheckPoint 3','CheckPoint 7',16]
+,['CheckPoint 3','CheckPoint 8',6]
+,['CheckPoint 3','CheckPoint 9',3]
+,['CheckPoint 3','CheckPoint 10',5]
+,['CheckPoint 3','CheckPoint 11',12]
+,['CheckPoint 3','CheckPoint 12',6]
+,['CheckPoint 3','CheckPoint 13',5]
+,['CheckPoint 3','CheckPoint 14',5]
+
+            
+,['CheckPoint 4','CheckPoint 1',15]
+,['CheckPoint 4','CheckPoint 2',17]
+,['CheckPoint 4','CheckPoint 3',13]
+,['CheckPoint 4','CheckPoint 5',11]
+,['CheckPoint 4','CheckPoint 6',11]
+,['CheckPoint 4','CheckPoint 7',18]
+,['CheckPoint 4','CheckPoint 8',2]
+,['CheckPoint 4','CheckPoint 9',9]
+,['CheckPoint 4','CheckPoint 10',11]
+,['CheckPoint 4','CheckPoint 11',3]
+,['CheckPoint 4','CheckPoint 12',4]
+,['CheckPoint 4','CheckPoint 13',4]
+,['CheckPoint 4','CheckPoint 14',7]
+
+            
+,['CheckPoint 5','CheckPoint 1',13]
+,['CheckPoint 5','CheckPoint 2',12]
+,['CheckPoint 5','CheckPoint 3',2]
+,['CheckPoint 5','CheckPoint 4',11]
+,['CheckPoint 5','CheckPoint 6',22]
+,['CheckPoint 5','CheckPoint 7',4]
+,['CheckPoint 5','CheckPoint 8',13]
+,['CheckPoint 5','CheckPoint 9',11]
+,['CheckPoint 5','CheckPoint 10',14]
+,['CheckPoint 5','CheckPoint 11',11]
+,['CheckPoint 5','CheckPoint 12',14]
+,['CheckPoint 5','CheckPoint 13',14]
+,['CheckPoint 5','CheckPoint 14',7]
+
+
+            
+,['CheckPoint 6','CheckPoint 1',15]
+,['CheckPoint 6','CheckPoint 2',13]
+,['CheckPoint 6','CheckPoint 3',6]
+,['CheckPoint 6','CheckPoint 4',11]
+,['CheckPoint 6','CheckPoint 5',22]
+,['CheckPoint 6','CheckPoint 7',6]
+,['CheckPoint 6','CheckPoint 8',10]
+,['CheckPoint 6','CheckPoint 9',15]
+,['CheckPoint 6','CheckPoint 10',16]
+,['CheckPoint 6','CheckPoint 11',8]
+,['CheckPoint 6','CheckPoint 12',12]
+,['CheckPoint 6','CheckPoint 13',9]
+,['CheckPoint 6','CheckPoint 14',16]
+
+            
+,['CheckPoint 7','CheckPoint 1',13]
+,['CheckPoint 7','CheckPoint 2',17]
+,['CheckPoint 7','CheckPoint 3',16]
+,['CheckPoint 7','CheckPoint 4',18]
+,['CheckPoint 7','CheckPoint 5',4]
+,['CheckPoint 7','CheckPoint 6',6]
+,['CheckPoint 7','CheckPoint 8',1]
+,['CheckPoint 7','CheckPoint 9',7]
+,['CheckPoint 7','CheckPoint 10',8]
+,['CheckPoint 7','CheckPoint 11',3]
+,['CheckPoint 7','CheckPoint 12',5]
+,['CheckPoint 7','CheckPoint 13',2]
+,['CheckPoint 7','CheckPoint 14',7]
+
+            
+,['CheckPoint 8','CheckPoint 1',5]
+,['CheckPoint 8','CheckPoint 2',2]
+,['CheckPoint 8','CheckPoint 3',6]
+,['CheckPoint 8','CheckPoint 4',2]
+,['CheckPoint 8','CheckPoint 5',13]
+,['CheckPoint 8','CheckPoint 6',10]
+,['CheckPoint 8','CheckPoint 7',1]
+,['CheckPoint 8','CheckPoint 9',12]
+,['CheckPoint 8','CheckPoint 10',14]
+,['CheckPoint 8','CheckPoint 11',24]
+,['CheckPoint 8','CheckPoint 12',21]
+,['CheckPoint 8','CheckPoint 13',24]
+,['CheckPoint 8','CheckPoint 14',12]
+
+,['CheckPoint 9','CheckPoint 1',12]
+,['CheckPoint 9','CheckPoint 2',9]
+,['CheckPoint 9','CheckPoint 3',3]
+,['CheckPoint 9','CheckPoint 4',9]
+,['CheckPoint 9','CheckPoint 5',11]
+,['CheckPoint 9','CheckPoint 6',15]
+,['CheckPoint 9','CheckPoint 7',7]
+,['CheckPoint 9','CheckPoint 8',12]
+,['CheckPoint 9','CheckPoint 10',19]
+,['CheckPoint 9','CheckPoint 11',9]
+,['CheckPoint 9','CheckPoint 12',16]
+,['CheckPoint 9','CheckPoint 13',13]
+,['CheckPoint 9','CheckPoint 14',24]
+
+            
+,['CheckPoint 10','CheckPoint 1',10]
+,['CheckPoint 10','CheckPoint 2',11]
+,['CheckPoint 10','CheckPoint 3',5]
+,['CheckPoint 10','CheckPoint 4',11]
+,['CheckPoint 10','CheckPoint 5',14]
+,['CheckPoint 10','CheckPoint 6',16]
+,['CheckPoint 10','CheckPoint 7',8]
+,['CheckPoint 10','CheckPoint 8',14]
+,['CheckPoint 10','CheckPoint 9',19]
+,['CheckPoint 10','CheckPoint 11',12]
+,['CheckPoint 10','CheckPoint 12',20]
+,['CheckPoint 10','CheckPoint 13',11]
+,['CheckPoint 10','CheckPoint 14',20]
+
+            
+,['CheckPoint 11','CheckPoint 1',5]
+,['CheckPoint 11','CheckPoint 2',0]
+,['CheckPoint 11','CheckPoint 3',12]
+,['CheckPoint 11','CheckPoint 4',3]
+,['CheckPoint 11','CheckPoint 5',11]
+,['CheckPoint 11','CheckPoint 6',8]
+,['CheckPoint 11','CheckPoint 7',3]
+,['CheckPoint 11','CheckPoint 8',24]
+,['CheckPoint 11','CheckPoint 9',9]
+,['CheckPoint 11','CheckPoint 10',12]
+,['CheckPoint 11','CheckPoint 12',17]
+,['CheckPoint 11','CheckPoint 13',21]
+,['CheckPoint 11','CheckPoint 14',14]
+
+            
+,['CheckPoint 12','CheckPoint 1',7]
+,['CheckPoint 12','CheckPoint 2',5]
+,['CheckPoint 12','CheckPoint 3',6]
+,['CheckPoint 12','CheckPoint 4',4]
+,['CheckPoint 12','CheckPoint 5',14]
+,['CheckPoint 12','CheckPoint 6',12]
+,['CheckPoint 12','CheckPoint 7',5]
+,['CheckPoint 12','CheckPoint 8',21]
+,['CheckPoint 12','CheckPoint 9',16]
+,['CheckPoint 12','CheckPoint 10',20]
+,['CheckPoint 12','CheckPoint 11',17]
+,['CheckPoint 12','CheckPoint 13',21]
+,['CheckPoint 12','CheckPoint 14',14]
+
+            
+,['CheckPoint 13','CheckPoint 1',9]
+,['CheckPoint 13','CheckPoint 2',5]
+,['CheckPoint 13','CheckPoint 3',5]
+,['CheckPoint 13','CheckPoint 4',4]
+,['CheckPoint 13','CheckPoint 5',14]
+,['CheckPoint 13','CheckPoint 6',9]
+,['CheckPoint 13','CheckPoint 7',2]
+,['CheckPoint 13','CheckPoint 8',24]
+,['CheckPoint 13','CheckPoint 9',13]
+,['CheckPoint 13','CheckPoint 10',11]
+,['CheckPoint 13','CheckPoint 11',21]
+,['CheckPoint 13','CheckPoint 12',21]
+,['CheckPoint 13','CheckPoint 14',13]
+
+            
+,['CheckPoint 14','CheckPoint 1',9]
+,['CheckPoint 14','CheckPoint 2',6]
+,['CheckPoint 14','CheckPoint 3',5]
+,['CheckPoint 14','CheckPoint 4',7]
+,['CheckPoint 14','CheckPoint 5',7]
+,['CheckPoint 14','CheckPoint 6',16]
+,['CheckPoint 14','CheckPoint 7',7]
+,['CheckPoint 14','CheckPoint 8',12]
+,['CheckPoint 14','CheckPoint 9',24]
+,['CheckPoint 14','CheckPoint 10',20]
+,['CheckPoint 14','CheckPoint 11',14]
+,['CheckPoint 14','CheckPoint 12',14]
+,['CheckPoint 14','CheckPoint 13',13]
+
+
+];
+var colors = {
+"CheckPoint 1":         "#d51918"
+,"CheckPoint 2":    "#ce004b"
+,"CheckPoint 3":    "#c90149"
+,"CheckPoint 4":        "#fa42a4"
+,"CheckPoint 5": "#820398"
+,"CheckPoint 6":        "#490181"
+,"CheckPoint 7": "#0d017d"
+,"CheckPoint 8":      "#0319c7"
+,"CheckPoint 9": "#007318"
+,"CheckPoint 10":  "#f7fe00"
+,"CheckPoint 11":   "#ff9900"
+,"CheckPoint 12":    "#ff7906"
+,"CheckPoint 13":     "#de2803"
+,"CheckPoint 14":     "#9d0708"
+
+};
+var sortOrder =[
+"CheckPoint 1"
+,"CheckPoint 2"
+,"CheckPoint 3"
+,"CheckPoint 4"
+,"CheckPoint 5"
+,"CheckPoint 6"
+,"CheckPoint 7"
+,"CheckPoint 8"
+,"CheckPoint 9"
+,"CheckPoint 10"
+,"CheckPoint 11"
+,"CheckPoint 12"
+,"CheckPoint 13"
+,"CheckPoint 14"
+
+];
+function sort(a,b){ return d3.ascending(sortOrder.indexOf(a),sortOrder.indexOf(b)); }
+var ch = viz.ch().data(data)
+      .padding(.01)
+      .sort(sort)
+	  .innerRadius(300)
+	  .outerRadius(310)
+	  .duration(1000)
+	  .chordOpacity(0.3)
+	  .labelPadding(.03)
+      .fill(function(d){ return colors[d];});
+var width=1100, height=900;
+var svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+svg.append("g").attr("transform", "translate(600,550)").call(ch);
+// adjust height of frame in bl.ocks.org
+d3.select(self.frameElement).style("height", height+"px").style("width", width+"px");     
+</script>
